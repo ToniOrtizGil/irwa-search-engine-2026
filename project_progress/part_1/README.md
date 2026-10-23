@@ -1,6 +1,6 @@
 # Part 1 - Text Processing and Exploratory Data Analysis
 
-Tag: `IRWA-2026-part-1` · Report: [`IRWA-2026-u233542-u232701-u232752-part-1.pdf`](IRWA-2026-u233542-u232701-u232752-part-1.pdf) (also submitted in Aula Global).
+Tag: `IRWA-2026-part-1` · The report (PDF) is submitted in Aula Global.
 
 All commands are run **from the project root** with the virtual environment active
 (installation steps are in the root [README](../../README.md#quick-start-part-1)).
