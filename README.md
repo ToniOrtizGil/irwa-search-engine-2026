@@ -1,4 +1,4 @@
-# IRWA Final Project 2026 — Fashion products search engine (RAG)
+# IRWA Final Project 2026 - Fashion products search engine (RAG)
 
 **Group:** Antonio Javier Ortiz Gil (u233542) · Juan Antonio Oliver Blanes (u232701) · Aitor Bolige Cubas (u232752)
 **Course:** Information Retrieval and Web Analytics, Universitat Pompeu Fabra
@@ -7,9 +7,9 @@
 | Part | Topic | Tag | Folder |
 |---|---|---|---|
 | 1 | Text Processing and Exploratory Data Analysis | `IRWA-2026-part-1` | [`project_progress/part_1`](project_progress/part_1) |
-| 2 | Indexing and Evaluation | — | `project_progress/part_2` |
-| 3 | Ranking and Filtering | — | `project_progress/part_3` |
-| 4 | RAG, User Interface and Web Analytics | — | web app (`web_app.py`, `myapp/`) |
+| 2 | Indexing and Evaluation | - | `project_progress/part_2` |
+| 3 | Ranking and Filtering | - | `project_progress/part_3` |
+| 4 | RAG, User Interface and Web Analytics | - | web app (`web_app.py`, `myapp/`) |
 
 ## Quick start (Part 1)
 

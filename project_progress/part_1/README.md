@@ -1,4 +1,4 @@
-# Part 1 — Text Processing and Exploratory Data Analysis
+# Part 1 - Text Processing and Exploratory Data Analysis
 
 Tag: `IRWA-2026-part-1` · Report: [`IRWA-2026-u233542-u232701-u232752-part-1.pdf`](IRWA-2026-u233542-u232701-u232752-part-1.pdf) (also submitted in Aula Global).
 
@@ -12,7 +12,7 @@ Place the files provided by the instructors in `data/` (the folder is git-ignore
 | File | Content |
 |---|---|
 | `data/fashion_products_dataset.json` | 28,080 products (list of JSON objects) |
-| `data/validation_labels.csv` | `title, pid, query_id, labels` — 40 judged documents for 2 queries |
+| `data/validation_labels.csv` | `title, pid, query_id, labels` - 40 judged documents for 2 queries |
 
 ## 2. Pre-processing
 

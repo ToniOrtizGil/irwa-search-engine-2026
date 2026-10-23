@@ -1,7 +1,6 @@
-"""
-Process the whole corpus and save it for Part 2.
+"""Processes the whole corpus and saves it for Part 2.
 
-Run from the project root: python -m project_progress.part_1.run_preprocessing
+Run from the root: python -m project_progress.part_1.run_preprocessing
 """
 
 import time

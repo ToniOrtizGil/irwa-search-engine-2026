@@ -1,4 +1,4 @@
-"""Field pre-processing (Part 1): numeric fields, product_details and the processed corpus."""
+"""Field handling: numeric fields, product_details and the processed corpus."""
 
 import json
 import os
@@ -11,30 +11,28 @@ from myapp.preprocessing.text_processing import build_terms
 TEXT_FIELDS = ["title", "description", "brand", "category", "sub_category",
                "product_details", "seller"]
 
-# category (96.6% same value, idf ~ 0) and seller (describes the shop) are left out
+# category is almost constant and seller describes the shop, so they stay out of the combined field
 SEARCH_FIELDS = ["title", "description", "brand", "sub_category", "product_details"]
 
-# codes and constant values that are useless as terms
+# codes and constant values, useless as terms
 EXCLUDED_DETAIL_KEYS = ["style code", "model name", "model number", "series",
                         "net quantity", "number of contents in sales package",
                         "pack of", "country of origin", "fabric care", "size"]
 
-# values that mean nothing without their key ("Hooded: Yes")
+# "Hooded: Yes" says nothing without the key
 EXCLUDED_DETAIL_VALUES = ["yes", "no", "na", "n/a", "none", "-"]
 
 
 def load_raw_corpus(path):
-    """Load the json corpus into a DataFrame (one row per product)."""
     with open(path, encoding="utf-8") as fp:
         data = json.load(fp)
     return pd.DataFrame(data)
 
 
 def is_missing(value):
-    """Return True if the value is None, NaN or an empty string."""
     if value is None:
         return True
-    if isinstance(value, float) and value != value:  # NaN
+    if isinstance(value, float) and value != value:
         return True
     if isinstance(value, str) and value.strip() == "":
         return True
@@ -42,7 +40,6 @@ def is_missing(value):
 
 
 def parse_price(value):
-    """Convert a price like "2,999" to 2999.0 (None if missing)."""
     if is_missing(value):
         return None
     try:
@@ -52,7 +49,6 @@ def parse_price(value):
 
 
 def parse_discount(value):
-    """Convert a discount like "69% off" to 69.0 (None if missing)."""
     if is_missing(value):
         return None
     number = str(value).replace("% off", "").replace("%", "").replace(",", "").strip()
@@ -63,7 +59,6 @@ def parse_discount(value):
 
 
 def parse_rating(value):
-    """Convert the rating to a float; only values between 0 and 5 are valid."""
     if is_missing(value):
         return None
     try:
@@ -76,7 +71,6 @@ def parse_rating(value):
 
 
 def flatten_product_details(details):
-    """Turn [{"Fabric": "Cotton"}, {"Color": "Blue"}] into {"Fabric": "Cotton", "Color": "Blue"}."""
     result = {}
     if not isinstance(details, list):
         return result
@@ -87,10 +81,7 @@ def flatten_product_details(details):
 
 
 def product_details_to_text(details):
-    """Join the useful values of product_details into one text.
-
-    Only values are indexed: keys like "Fabric" appear in almost every product.
-    """
+    """Only the values are indexed, the keys ("Fabric", "Color"...) are in almost every product."""
     values = []
     for key, value in details.items():
         if key.strip().lower() in EXCLUDED_DETAIL_KEYS:
@@ -102,11 +93,7 @@ def product_details_to_text(details):
 
 
 def build_processed_document(raw):
-    """Process one product.
-
-    Returns a dict with pid, meta (output fields), tokens (terms of each field)
-    and search_tokens (combined field).
-    """
+    """Returns pid, meta (output fields), tokens (terms per field) and search_tokens (combined field)."""
     details = flatten_product_details(raw.get("product_details"))
 
     meta = {
@@ -141,7 +128,6 @@ def build_processed_document(raw):
 
 
 def build_processed_corpus(df):
-    """Process all the products and return a dict pid -> processed document."""
     corpus = {}
     for raw in df.to_dict(orient="records"):
         doc = build_processed_document(raw)
@@ -150,7 +136,6 @@ def build_processed_corpus(df):
 
 
 def numeric_frame(corpus):
-    """Return a DataFrame (index pid) with the numeric fields, for filtering and ranking in Part 3."""
     rows = []
     for doc in corpus.values():
         m = doc["meta"]
@@ -161,7 +146,6 @@ def numeric_frame(corpus):
 
 
 def save_processed_corpus(corpus, path):
-    """Save the processed corpus with pickle to reuse it in the next parts."""
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "wb") as fp:
         pickle.dump(corpus, fp)
