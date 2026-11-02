@@ -102,7 +102,7 @@ def rr_at_k(labels, k=10):
     Returns:
     reciprocal rank
     """
-    top = labels[:k]
+    top = np.asarray(labels[:k])  # with a plain list, top == 1 would be a single False
     if np.sum(top) == 0:
         return 0.0
     return 1 / (np.argmax(top == 1) + 1)
