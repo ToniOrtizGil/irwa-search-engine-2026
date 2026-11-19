@@ -17,7 +17,7 @@ which is in `requirements.txt`).
 ## 2. Run
 
 ```bash
-# executes every cell (~25 s)
+# executes every cell (~35 s)
 jupyter nbconvert --to notebook --execute --inplace project_progress/part_3/part3_ranking.ipynb
 # or open it with: jupyter notebook project_progress/part_3/part3_ranking.ipynb and Run All
 ```
@@ -42,7 +42,7 @@ import pickle
 from myapp.search.ranking import build_search_engine, search
 
 corpus = pickle.load(open("data/processed/processed_corpus.pkl", "rb"))
-engine = build_search_engine(corpus)          # index + BM25 statistics + word2vec (~11 s)
+engine = build_search_engine(corpus)          # index + BM25 statistics + word2vec (~25 s)
 search("men white sneakers", engine, method="bm25", top_k=10)   # list of (pid, score)
 search("men white sneakers", engine, method="ours", top_k=10)
 search("men white sneakers", engine, method="word2vec", top_k=20)
@@ -50,7 +50,7 @@ search("men white sneakers", engine, method="word2vec", top_k=20)
 
 `build_search_engine(corpus, with_word2vec=False)` skips word2vec if only `tfidf`, `bm25` or `ours` are needed.
 The BM25 parameters can be changed with `rank_bm25(..., k1=..., b=...)`, and the word2vec parameters with
-`train_word2vec(corpus, vector_size=..., window=..., min_count=..., seed=...)`.
+`train_word2vec(corpus, vector_size=..., window=..., min_count=..., epochs=..., seed=...)`.
 
 ## 4. Notebook sections
 

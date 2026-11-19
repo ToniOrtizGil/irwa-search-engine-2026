@@ -153,22 +153,24 @@ def stable_hash(text):
     return zlib.crc32(text.encode("utf-8"))
 
 
-def train_word2vec(corpus, field="search_tokens", vector_size=100, window=5, min_count=1, seed=42):
+def train_word2vec(corpus, field="search_tokens", vector_size=100, window=5, min_count=2, epochs=20, seed=42):
     """
     Train word2vec (CBOW, gensim) on the terms of the documents. With one worker, a fixed seed and
     stable_hash the vectors are the same in every run.
 
     Argument:
     corpus -- processed corpus
-    field -- terms used as sentences (the same terms as the index, so every query term has a vector)
-    vector_size, window, min_count, seed -- word2vec parameters
+    field -- terms used as sentences (the same terms as the index)
+    vector_size, window, seed -- word2vec parameters
+    min_count -- terms that appear fewer times are ignored (they get no vector)
+    epochs -- passes over the corpus (more than the default 5, the texts are short)
 
     Returns:
     trained gensim Word2Vec model
     """
     sentences = [doc[field] for doc in corpus.values()]
     return Word2Vec(sentences=sentences, vector_size=vector_size, window=window, min_count=min_count,
-                    workers=1, seed=seed, hashfxn=stable_hash)
+                    epochs=epochs, workers=1, seed=seed, hashfxn=stable_hash)
 
 
 def text_vector(terms, model):
