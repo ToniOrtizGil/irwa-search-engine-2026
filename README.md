@@ -8,7 +8,7 @@
 |---|---|---|---|
 | 1 | Text Processing and Exploratory Data Analysis | `IRWA-2026-part-1` | [`project_progress/part_1`](project_progress/part_1) |
 | 2 | Indexing and Evaluation | `IRWA-2026-part-2` | [`project_progress/part_2`](project_progress/part_2) |
-| 3 | Ranking and Filtering | - | `project_progress/part_3` |
+| 3 | Ranking and Filtering | `IRWA-2026-part-3` | [`project_progress/part_3`](project_progress/part_3) |
 | 4 | RAG, User Interface and Web Analytics | - | web app (`web_app.py`, `myapp/`) |
 
 ## Quick start (Part 1)
@@ -52,6 +52,16 @@ jupyter nbconvert --to notebook --execute --inplace project_progress/part_2/part
 
 Details are in [`project_progress/part_2/README.md`](project_progress/part_2/README.md).
 
+## Quick start (Part 3)
+
+```bash
+# TF-IDF, BM25, our score and word2vec + cosine on our 5 test queries (needs gensim, in requirements.txt)
+jupyter nbconvert --to notebook --execute --inplace project_progress/part_3/part3_ranking.ipynb
+```
+
+The ranking method is selected with `search(query, engine, method)`, where `method` is `"tfidf"`, `"bm25"`,
+`"ours"` or `"word2vec"`. Details are in [`project_progress/part_3/README.md`](project_progress/part_3/README.md).
+
 ## Code layout added in Part 1
 
 ```
@@ -74,6 +84,16 @@ project_progress/part_2/
 ├── part2_indexing_evaluation.ipynb  # index, our 5 test queries and evaluation
 ├── own_queries_labels.csv           # our relevance judgments (top 20 of each test query)
 └── README.md                        # Part 2 instructions
+```
+
+## Code layout added in Part 3
+
+```
+myapp/search/ranking.py         # BM25, our score, word2vec + cosine and search(query, engine, method)
+project_progress/part_3/
+├── part3_ranking.ipynb         # comparison of the rankings and top-20 lists with word2vec
+├── word2vec_top20.csv          # top-20 documents of our 5 test queries with word2vec + cosine
+└── README.md                   # Part 3 instructions
 ```
 
 ---
